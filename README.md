@@ -28,7 +28,7 @@
 
 ---
 
-If you've ever added an instruction to your prompt, watched accuracy go up, and assumed your instruction caused the gain — you might be wrong. On 1 of 5 models we tested, that conclusion is invalid more often than not. This repo tells you which models, and gives you the tools to check your own.
+If you've ever added an instruction to your prompt, watched accuracy go up, and assumed your instruction caused the gain, you might be wrong. On 1 of 5 models we tested, that conclusion is invalid more often than not. This repo tells you which models, and gives you the tools to check your own.
 
 **prompt-doe** brings [Design of Experiments](https://en.wikipedia.org/wiki/Design_of_experiments) to prompt engineering. One command gives you:
 
