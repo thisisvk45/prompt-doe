@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="figures/hero_output.svg" alt="Example output from prompt-doe: component attribution chart and entanglement matrix" width="900">
+  <img src="figures/prompt_analysis_output.svg" alt="Example output from prompt-doe: component attribution chart and entanglement matrix" width="900">
 </p>
 
 <h1 align="center">prompt-doe</h1>
