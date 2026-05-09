@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="figures/prompt_engineering_pipeline.svg" alt="prompt-doe method pipeline" width="800">
+  <img src="figures/hero_output.svg" alt="Example output from prompt-doe: component attribution chart and entanglement matrix" width="900">
 </p>
 
 <h1 align="center">prompt-doe</h1>
@@ -10,9 +10,10 @@
 
 <p align="center">
   <a href="#quick-start">Quick Start</a> &nbsp;&bull;&nbsp;
-  <a href="#the-problem">The Problem</a> &nbsp;&bull;&nbsp;
-  <a href="#what-we-found">What We Found</a> &nbsp;&bull;&nbsp;
+  <a href="#worked-example">Example</a> &nbsp;&bull;&nbsp;
+  <a href="#what-we-found">Results</a> &nbsp;&bull;&nbsp;
   <a href="#run-it-on-your-model">Your Model</a> &nbsp;&bull;&nbsp;
+  <a href="#how-it-works">Method</a> &nbsp;&bull;&nbsp;
   <a href="#reproducing-the-paper">Reproduce</a> &nbsp;&bull;&nbsp;
   <a href="docs/architecture.md">Architecture</a> &nbsp;&bull;&nbsp;
   <a href="#citation">Cite</a>
@@ -27,48 +28,15 @@
 
 ---
 
-## The Problem
+If you've ever added an instruction to your prompt, watched accuracy go up, and assumed your instruction caused the gain — you might be wrong. On 1 of 5 models we tested, that conclusion is invalid more often than not. This repo tells you which models, and gives you the tools to check your own.
 
-You've built a prompt with a system role, a persona, few-shot examples, chain-of-thought, an output format, and constraints. It works — but *which pieces are actually helping?* Which ones are dead weight? Which ones are secretly fighting each other?
-
-The standard approach — ablate one piece at a time — misses interactions and costs 64 runs for 6 components. We do it in 8.
-
-**prompt-doe** brings [Design of Experiments](https://en.wikipedia.org/wiki/Design_of_experiments) to prompt engineering. It tells you:
+**prompt-doe** brings [Design of Experiments](https://en.wikipedia.org/wiki/Design_of_experiments) to prompt engineering. One command gives you:
 
 1. **Which components help, which hurt, which do nothing** — with confidence intervals
 2. **Whether your components interact** (entanglement) — or if they're safe to tune independently
 3. **All of this at 12.5% of the brute-force cost** — 8 runs instead of 64
 
-This is the code and data for the paper *"When Does Component Independence Hold? Output-Level Entanglement and Model-Conditional Validity of Prompt Attribution"*.
-
----
-
-## What We Found
-
-### The headline numbers
-
-| Finding | Number |
-|---------|--------|
-| PB screening cost vs. full factorial | **8 runs vs. 64** (12.5%) |
-| Cross-model effect direction agreement | **94.4%** (17/18 component-task pairs) |
-| Entanglement range across models | **0/15 to 13/15** significant pairs |
-| Length-artifact correlation | **r = −0.87** (entanglement is *not* a length effect) |
-
-### Entanglement is model-specific — not family-specific
-
-<p align="center">
-  <img src="figures/component_entanglement_by_model.svg" alt="Entanglement varies by model, not model family" width="700">
-</p>
-
-GPT-4o-mini and GPT-4o are both OpenAI models. One has 13/15 entangled component pairs; the other has 0/15. Same family, opposite behavior. This means entanglement is a property of how a model was trained (likely distillation), not its architecture.
-
-### Three things every prompt engineer should know
-
-> **Always include output format instructions.** Most reliably beneficial component across all 5 models and all 3 tasks. No exceptions.
-
-> **Drop the persona.** "Act as a meticulous professor" hurts accuracy in every single model-task combination we tested (15/15 negative).
-
-> **Few-shot examples work.** Positive effect everywhere. Not surprising, but now quantified with confidence intervals.
+Code and data for the paper *"When Does Component Independence Hold? Output-Level Entanglement and Model-Conditional Validity of Prompt Attribution"*.
 
 ---
 
@@ -99,6 +67,68 @@ PYTHONPATH=. python scripts/run_pb_screen.py              # Plackett-Burman + LO
 PYTHONPATH=. python scripts/run_analysis.py               # Bootstrap CIs + BH correction
 PYTHONPATH=. python scripts/run_full_factorial.py         # Full 64-run validation (optional)
 ```
+
+---
+
+## Worked Example
+
+Here's what you get when you run `prompt-doe` on GPT-4o-mini across GSM8K (grade-school math).
+
+Your prompt has 6 components. The tool tests all of them in 8 carefully chosen configurations (not 64), then tells you:
+
+**Attribution table** (from `results/gpt-4o-mini/main_effects_pb_vs_loo.csv`):
+
+```
+Component        PB Effect    LOO Effect    Verdict
+─────────────────────────────────────────────────────
+output_format     +0.058       +0.045       Helps — always include
+few_shot          +0.047       +0.040       Helps — keep your examples
+constraints       +0.023       +0.015       Helps slightly
+cot_trigger       +0.010       +0.005       Negligible
+system_role       −0.008       −0.010       Negligible
+persona           −0.033       −0.020       Hurts — drop it
+```
+
+**Entanglement matrix** (from `results/gpt-4o-mini/entanglement_matrix.csv`):
+
+```
+13/15 component pairs are entangled (HSIC p < 0.05, BH-corrected)
+→ Components interact heavily in GPT-4o-mini's output space
+→ LOO ablation may give misleading attribution on this model
+```
+
+**What does this tell you?** On GPT-4o-mini, your output format instruction is doing most of the work (+5.8pp accuracy). Your persona instruction is actively hurting (−3.3pp). And because 13/15 component pairs are entangled, you can't reliably tune components one-at-a-time on this model — their effects depend on each other.
+
+Run the same protocol on GPT-4o? Entanglement drops to 0/15. Same components, same prompts, completely different interaction structure. That's the finding.
+
+---
+
+## What We Found
+
+### The headline numbers
+
+| Finding | Number |
+|---------|--------|
+| PB screening cost vs. full factorial | **8 runs vs. 64** (12.5%) |
+| Cross-model effect direction agreement | **94.4%** (17/18 component-task pairs) |
+| Entanglement range across models | **0/15 to 13/15** significant pairs |
+| Length-artifact correlation | **r = −0.87** (entanglement is *not* a length effect) |
+
+### Entanglement is model-specific — not family-specific
+
+<p align="center">
+  <img src="figures/component_entanglement_by_model.svg" alt="Entanglement varies by model, not model family" width="700">
+</p>
+
+GPT-4o-mini and GPT-4o are both OpenAI models. One has 13/15 entangled component pairs; the other has 0/15. Same family, opposite behavior. This means entanglement is a property of how a model was trained (likely distillation), not its architecture.
+
+### Three things every prompt engineer should know
+
+> **Always include output format instructions.** Most reliably beneficial component across all 5 models and all 3 tasks. No exceptions.
+
+> **Drop the persona.** "Act as a meticulous professor" hurts accuracy in every single model-task combination we tested (15/15 negative).
+
+> **Few-shot examples work.** Positive effect everywhere. Not surprising, but now quantified with confidence intervals.
 
 ---
 
@@ -235,8 +265,67 @@ prompt-doe/
 ├── results/                  # Pre-computed results for all 5 models
 ├── figures/                  # Publication figures (PDF + PNG + SVG)
 ├── paper/                    # Paper PDF
+├── docs/
+│   └── architecture.md       # Codebase architecture + extension guide
 └── tests/                    # Unit tests
 ```
+
+---
+
+## Limitations
+
+- Tested on 5 models and 3 tasks; generalization to other tasks/domains is unverified
+- The distillation hypothesis for entanglement is suggested by 1 distilled model (GPT-4o-mini) in the sample, not proven
+- HSIC test power is limited at n=50 per condition; non-significant pairs may still have weak entanglement
+- Plackett-Burman estimates only main effects; interaction effects require full factorial or Shapley-based follow-up
+- Embedding model choice (`all-mpnet-base-v2`) is a hyperparameter we did not vary
+
+---
+
+## FAQ
+
+<details>
+<summary><b>Does this work with closed-source APIs (GPT, Claude)?</b></summary>
+Yes. We tested on GPT-4o-mini, GPT-4o (OpenAI API), and Claude Haiku 4.5 (via OpenRouter). Any model with a chat completions endpoint works.
+</details>
+
+<details>
+<summary><b>How long does it take?</b></summary>
+~20 minutes on GPT-4o-mini, ~40 minutes on Claude Haiku for the full protocol (entanglement + PB + LOO + analysis across 3 tasks). Mostly API latency.
+</details>
+
+<details>
+<summary><b>What does it cost?</b></summary>
+$5–15 in API credits depending on the model. GPT-4o-mini is cheapest (~$5). GPT-4o is most expensive (~$15). The protocol uses ~10,500 API calls per model.
+</details>
+
+<details>
+<summary><b>Why output-based entanglement instead of prompt-based?</b></summary>
+Because the assumption that matters for attribution is whether the model's <em>responses</em> depend on component combinations, not whether the prompt embeddings do. A model might completely ignore persona text (no output effect) even though persona changes the prompt embedding. Output-based HSIC captures the model's actual sensitivity.
+</details>
+
+<details>
+<summary><b>Why Plackett-Burman over Shapley values?</b></summary>
+PB recovers main effects at 12.5% the cost of full factorial. Shapley values are needed only when interaction effects dominate — which we show they don't on these benchmarks (interaction magnitudes are ~5x smaller than main effects). If you find high entanglement on your model, run the full factorial to check.
+</details>
+
+<details>
+<summary><b>Can I trust these results on my model without running it?</b></summary>
+No. The whole point of the paper is that entanglement is model-specific. GPT-4o-mini and GPT-4o give opposite results with the same prompts. Run the protocol on your model.
+</details>
+
+---
+
+## Contributing
+
+Contributions welcome:
+
+- **New model adapters** in `src/inference.py` (Azure OpenAI, Bedrock, Together, etc.)
+- **New tasks** in `config/tasks.yaml` (code generation, summarization, etc.)
+- **Alternative entanglement diagnostics** (mutual information, kernel CCA, distance correlation)
+- **Bug reports and reproductions** on new models — especially if you find surprising entanglement patterns
+
+See [docs/architecture.md](docs/architecture.md) for how the codebase is organized.
 
 ---
 
