@@ -32,9 +32,9 @@ If you've ever added an instruction to your prompt, watched accuracy go up, and 
 
 **prompt-doe** brings [Design of Experiments](https://en.wikipedia.org/wiki/Design_of_experiments) to prompt engineering. One command gives you:
 
-1. **Which components help, which hurt, which do nothing** — with confidence intervals
+1. **Which components help, which hurt, which do nothing** with confidence intervals
 2. **Whether your components interact** (entanglement) — or if they're safe to tune independently
-3. **All of this at 12.5% of the brute-force cost** — 8 runs instead of 64
+3. **All of this at 12.5% of the brute-force cost** : 8 runs instead of 64
 
 Code and data for the paper *"When Does Component Independence Hold? Output-Level Entanglement and Model-Conditional Validity of Prompt Attribution"*.
 
@@ -151,13 +151,13 @@ Every prompt is a combination of 6 binary components — each either *present* (
 
 The protocol has four stages:
 
-**1. Entanglement Test** — For each pair of components, toggle one on/off, collect LLM outputs, embed them with `all-mpnet-base-v2`, and run an HSIC permutation test. If it rejects: the components *interact* in the output space — you can't tune them independently.
+**1. Entanglement Test** : For each pair of components, toggle one on/off, collect LLM outputs, embed them with `all-mpnet-base-v2`, and run an HSIC permutation test. If it rejects: the components *interact* in the output space — you can't tune them independently.
 
-**2. Plackett-Burman Screening** — An 8-run [fractional factorial design](https://en.wikipedia.org/wiki/Plackett%E2%80%93Burman_design) that estimates all 6 main effects simultaneously. Each run evaluates 200 task examples. Total cost: 1,600 API calls instead of 12,800 for full factorial.
+**2. Plackett-Burman Screening** : An 8-run [fractional factorial design](https://en.wikipedia.org/wiki/Plackett%E2%80%93Burman_design) that estimates all 6 main effects simultaneously. Each run evaluates 200 task examples. Total cost: 1,600 API calls instead of 12,800 for full factorial.
 
-**3. LOO Baseline** — A 7-run leave-one-out ablation for comparison. Remove one component at a time from the full prompt. Standard practice — we include it to show PB recovers the same rankings cheaper.
+**3. LOO Baseline** : A 7-run leave-one-out ablation for comparison. Remove one component at a time from the full prompt. Standard practice — we include it to show PB recovers the same rankings cheaper.
 
-**4. Statistical Analysis** — Bootstrap BCa confidence intervals + Benjamini-Hochberg FDR correction. Compare PB vs. LOO rankings via Spearman correlation.
+**4. Statistical Analysis** : Bootstrap BCa confidence intervals + Benjamini-Hochberg FDR correction. Compare PB vs. LOO rankings via Spearman correlation.
 
 ### Tasks and models
 
