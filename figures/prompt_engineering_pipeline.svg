@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <!-- Background -->
+  <rect width="1200" height="500" fill="#ffffff"/>
+
+  <!-- Arrow marker definitions -->
+  <defs>
+    <marker id="arrowDark" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1e3a5f"/>
+    </marker>
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#999999"/>
+    </marker>
+  </defs>
+
+  <!-- ============ STAGE 1: 6 Prompt Components ============ -->
+  <g>
+    <rect x="30" y="60" width="200" height="380" rx="10" ry="10" fill="#f5f5f5" stroke="#1e3a5f" stroke-width="1.5"/>
+    <text x="130" y="90" text-anchor="middle" font-size="15" font-weight="600" fill="#1e3a5f">6 Prompt Components</text>
+
+    <!-- Pill 1: System Role (ON) -->
+    <g>
+      <rect x="50" y="110" width="160" height="38" rx="19" ry="19" fill="#ffffff" stroke="#1e3a5f" stroke-width="1.2"/>
+      <text x="65" y="134" font-size="12" fill="#1e3a5f" font-weight="500">System Role</text>
+      <rect x="172" y="121" width="26" height="16" rx="8" ry="8" fill="#2d8a8a"/>
+      <circle cx="190" cy="129" r="6" fill="#ffffff"/>
+    </g>
+
+    <!-- Pill 2: Persona (ON) -->
+    <g>
+      <rect x="50" y="158" width="160" height="38" rx="19" ry="19" fill="#ffffff" stroke="#1e3a5f" stroke-width="1.2"/>
+      <text x="65" y="182" font-size="12" fill="#1e3a5f" font-weight="500">Persona</text>
+      <rect x="172" y="169" width="26" height="16" rx="8" ry="8" fill="#2d8a8a"/>
+      <circle cx="190" cy="177" r="6" fill="#ffffff"/>
+    </g>
+
+    <!-- Pill 3: Few-Shot (OFF) -->
+    <g>
+      <rect x="50" y="206" width="160" height="38" rx="19" ry="19" fill="#ffffff" stroke="#1e3a5f" stroke-width="1.2"/>
+      <text x="65" y="230" font-size="12" fill="#1e3a5f" font-weight="500">Few-Shot</text>
+      <rect x="172" y="217" width="26" height="16" rx="8" ry="8" fill="#cccccc"/>
+      <circle cx="180" cy="225" r="6" fill="#ffffff"/>
+    </g>
+
+    <!-- Pill 4: CoT Trigger (ON) -->
+    <g>
+      <rect x="50" y="254" width="160" height="38" rx="19" ry="19" fill="#ffffff" stroke="#1e3a5f" stroke-width="1.2"/>
+      <text x="65" y="278" font-size="12" fill="#1e3a5f" font-weight="500">CoT Trigger</text>
+      <rect x="172" y="265" width="26" height="16" rx="8" ry="8" fill="#2d8a8a"/>
+      <circle cx="190" cy="273" r="6" fill="#ffffff"/>
+    </g>
+
+    <!-- Pill 5: Output Format (OFF) -->
+    <g>
+      <rect x="50" y="302" width="160" height="38" rx="19" ry="19" fill="#ffffff" stroke="#1e3a5f" stroke-width="1.2"/>
+      <text x="65" y="326" font-size="12" fill="#1e3a5f" font-weight="500">Output Format</text>
+      <rect x="172" y="313" width="26" height="16" rx="8" ry="8" fill="#cccccc"/>
+      <circle cx="180" cy="321" r="6" fill="#ffffff"/>
+    </g>
+
+    <!-- Pill 6: Constraints (ON) -->
+    <g>
+      <rect x="50" y="350" width="160" height="38" rx="19" ry="19" fill="#ffffff" stroke="#1e3a5f" stroke-width="1.2"/>
+      <text x="65" y="374" font-size="12" fill="#1e3a5f" font-weight="500">Constraints</text>
+      <rect x="172" y="361" width="26" height="16" rx="8" ry="8" fill="#2d8a8a"/>
+      <circle cx="190" cy="369" r="6" fill="#ffffff"/>
+    </g>
+  </g>
+
+  <!-- ============ STAGE 2 TOP: HSIC Entanglement Test ============ -->
+  <g>
+    <rect x="350" y="100" width="240" height="120" rx="10" ry="10" fill="#ffffff" stroke="#2d8a8a" stroke-width="1.8"/>
+    <text x="470" y="130" text-anchor="middle" font-size="14" font-weight="600" fill="#2d8a8a">HSIC Entanglement Test</text>
+    <text x="470" y="150" text-anchor="middle" font-size="11" fill="#555555">Are components independent</text>
+    <text x="470" y="165" text-anchor="middle" font-size="11" fill="#555555">in output space?</text>
+
+    <!-- Mini heatmap icon -->
+    <g transform="translate(420, 178)">
+      <rect x="0" y="0" width="12" height="12" fill="#2d8a8a" opacity="0.9"/>
+      <rect x="13" y="0" width="12" height="12" fill="#2d8a8a" opacity="0.3"/>
+      <rect x="26" y="0" width="12" height="12" fill="#2d8a8a" opacity="0.6"/>
+      <rect x="39" y="0" width="12" height="12" fill="#2d8a8a" opacity="0.2"/>
+      <rect x="0" y="13" width="12" height="12" fill="#2d8a8a" opacity="0.4"/>
+      <rect x="13" y="13" width="12" height="12" fill="#2d8a8a" opacity="0.9"/>
+      <rect x="26" y="13" width="12" height="12" fill="#2d8a8a" opacity="0.3"/>
+      <rect x="39" y="13" width="12" height="12" fill="#2d8a8a" opacity="0.7"/>
+      <rect x="0" y="26" width="12" height="12" fill="#2d8a8a" opacity="0.5"/>
+      <rect x="13" y="26" width="12" height="12" fill="#2d8a8a" opacity="0.2"/>
+      <rect x="26" y="26" width="12" height="12" fill="#2d8a8a" opacity="0.9"/>
+      <rect x="39" y="26" width="12" height="12" fill="#2d8a8a" opacity="0.4"/>
+    </g>
+  </g>
+
+  <!-- ============ STAGE 2 BOTTOM: Plackett-Burman Screen ============ -->
+  <g>
+    <rect x="350" y="280" width="240" height="120" rx="10" ry="10" fill="#ffffff" stroke="#1e3a5f" stroke-width="1.8"/>
+    <text x="470" y="310" text-anchor="middle" font-size="14" font-weight="600" fill="#1e3a5f">Plackett-Burman Screen</text>
+    <text x="470" y="330" text-anchor="middle" font-size="11" fill="#555555">8 runs (not 64)</text>
+
+    <!-- Mini fractional factorial matrix icon -->
+    <g transform="translate(420, 348)" font-size="9" font-family="monospace" font-weight="600">
+      <rect x="0" y="0" width="52" height="38" fill="#f5f5f5" stroke="#1e3a5f" stroke-width="0.8"/>
+      <text x="6" y="10" fill="#1e3a5f">+</text>
+      <text x="18" y="10" fill="#e07a5f">-</text>
+      <text x="30" y="10" fill="#1e3a5f">+</text>
+      <text x="42" y="10" fill="#1e3a5f">+</text>
+      <text x="6" y="22" fill="#e07a5f">-</text>
+      <text x="18" y="22" fill="#1e3a5f">+</text>
+      <text x="30" y="22" fill="#e07a5f">-</text>
+      <text x="42" y="22" fill="#1e3a5f">+</text>
+      <text x="6" y="34" fill="#1e3a5f">+</text>
+      <text x="18" y="34" fill="#1e3a5f">+</text>
+      <text x="30" y="34" fill="#e07a5f">-</text>
+      <text x="42" y="34" fill="#e07a5f">-</text>
+    </g>
+  </g>
+
+  <!-- ============ STAGE 3: Bootstrap Analysis ============ -->
+  <g>
+    <rect x="710" y="190" width="200" height="120" rx="10" ry="10" fill="#ffffff" stroke="#1e3a5f" stroke-width="1.8"/>
+    <text x="810" y="225" text-anchor="middle" font-size="14" font-weight="600" fill="#1e3a5f">Bootstrap Analysis</text>
+    <text x="810" y="248" text-anchor="middle" font-size="11" fill="#555555">BCa CIs + BH correction</text>
+
+    <!-- Distribution curve icon -->
+    <g transform="translate(750, 260)">
+      <path d="M 0,30 Q 15,30 25,15 Q 40,-5 60,15 Q 70,30 90,30 L 120,30" fill="none" stroke="#1e3a5f" stroke-width="1.5"/>
+      <line x1="0" y1="32" x2="120" y2="32" stroke="#1e3a5f" stroke-width="0.8"/>
+      <line x1="35" y1="32" x2="35" y2="36" stroke="#1e3a5f" stroke-width="0.8"/>
+      <line x1="85" y1="32" x2="85" y2="36" stroke="#1e3a5f" stroke-width="0.8"/>
+    </g>
+  </g>
+
+  <!-- ============ STAGE 4: Component Attribution ============ -->
+  <g>
+    <rect x="1020" y="170" width="160" height="160" rx="10" ry="10" fill="#ffffff" stroke="#e07a5f" stroke-width="2.5"/>
+    <text x="1100" y="200" text-anchor="middle" font-size="14" font-weight="700" fill="#e07a5f">Component</text>
+    <text x="1100" y="218" text-anchor="middle" font-size="14" font-weight="700" fill="#e07a5f">Attribution</text>
+    <text x="1100" y="240" text-anchor="middle" font-size="10" fill="#555555">Which parts of your</text>
+    <text x="1100" y="253" text-anchor="middle" font-size="10" fill="#555555">prompt actually matter?</text>
+
+    <!-- Bar chart icon (positive and negative bars) -->
+    <g transform="translate(1040, 268)">
+      <line x1="0" y1="25" x2="120" y2="25" stroke="#999999" stroke-width="0.8"/>
+      <rect x="4" y="5" width="14" height="20" fill="#e07a5f"/>
+      <rect x="22" y="13" width="14" height="12" fill="#e07a5f"/>
+      <rect x="40" y="25" width="14" height="8" fill="#1e3a5f" opacity="0.5"/>
+      <rect x="58" y="9" width="14" height="16" fill="#e07a5f"/>
+      <rect x="76" y="25" width="14" height="14" fill="#1e3a5f" opacity="0.5"/>
+      <rect x="94" y="17" width="14" height="8" fill="#e07a5f"/>
+    </g>
+  </g>
+
+  <!-- ============ ARROWS ============ -->
+  <!-- Stage 1 to HSIC -->
+  <line x1="230" y1="200" x2="345" y2="155" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+  <text x="250" y="170" font-size="10" fill="#555555" font-style="italic">embed outputs</text>
+
+  <!-- Stage 1 to PB -->
+  <line x1="230" y1="300" x2="345" y2="335" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+  <text x="245" y="330" font-size="10" fill="#555555" font-style="italic">8 configurations</text>
+
+  <!-- HSIC to Bootstrap -->
+  <line x1="590" y1="180" x2="705" y2="225" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+  <text x="600" y="195" font-size="10" fill="#555555" font-style="italic">independence p-values</text>
+
+  <!-- PB to Bootstrap -->
+  <line x1="590" y1="320" x2="705" y2="275" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+  <text x="615" y="315" font-size="10" fill="#555555" font-style="italic">main effects</text>
+
+  <!-- Bootstrap to Attribution -->
+  <line x1="910" y1="250" x2="1018" y2="250" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+  <text x="930" y="243" font-size="10" fill="#555555" font-style="italic">significant effects</text>
+
+  <!-- ============ LOO BASELINE COMPARISON (de-emphasized) ============ -->
+  <g opacity="0.55">
+    <rect x="500" y="445" width="200" height="36" rx="8" ry="8" fill="#f5f5f5" stroke="#999999" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="600" y="468" text-anchor="middle" font-size="11" fill="#666666" font-style="italic">LOO Baseline (7 runs)</text>
+
+    <!-- Dashed arrow up to Stage 3 -->
+    <line x1="700" y1="450" x2="800" y2="320" stroke="#999999" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowGray)"/>
+    <text x="745" y="395" font-size="10" fill="#888888" font-style="italic">comparison</text>
+  </g>
+</svg>

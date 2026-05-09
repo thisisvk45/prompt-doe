@@ -1,104 +1,142 @@
-# prompt-doe
+<p align="center">
+  <img src="figures/prompt_engineering_pipeline.svg" alt="prompt-doe method pipeline" width="800">
+</p>
 
-**Output-level entanglement diagnostics and Plackett-Burman screening for component-level prompt attribution.**
+<h1 align="center">prompt-doe</h1>
 
-Code and data for the paper *"When Does Component Independence Hold? Entanglement Diagnostics and Fractional Factorial Attribution for LLM Prompts"*.
+<p align="center">
+  <em>Stop guessing which parts of your prompt matter. Run an experiment instead.</em>
+</p>
+
+<p align="center">
+  <a href="#quick-start">Quick Start</a> &nbsp;&bull;&nbsp;
+  <a href="#the-problem">The Problem</a> &nbsp;&bull;&nbsp;
+  <a href="#what-we-found">What We Found</a> &nbsp;&bull;&nbsp;
+  <a href="#run-it-on-your-model">Your Model</a> &nbsp;&bull;&nbsp;
+  <a href="#reproducing-the-paper">Reproduce</a> &nbsp;&bull;&nbsp;
+  <a href="docs/architecture.md">Architecture</a> &nbsp;&bull;&nbsp;
+  <a href="#citation">Cite</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/models-5_tested-blue" alt="models">
+  <img src="https://img.shields.io/badge/tasks-3_benchmarks-green" alt="tasks">
+  <img src="https://img.shields.io/badge/license-MIT-orange" alt="license">
+</p>
 
 ---
 
-## TL;DR
+## The Problem
 
-We treat prompt engineering as a designed experiment. Using HSIC-based entanglement tests and Plackett-Burman fractional factorial designs, we show that (1) **component entanglement is model-specific** — GPT-4o-mini exhibits 13/15 significant output interactions while GPT-4o and Claude Haiku show 0/15, (2) **entanglement is not a response-length artifact** (Spearman r = -0.87 between entanglement and length CV across 5 models), and (3) **PB screening recovers the same component rankings as full factorial at 12.5% of the evaluation cost**, with cross-model effect direction agreement of 94.4%.
+You've built a prompt with a system role, a persona, few-shot examples, chain-of-thought, an output format, and constraints. It works — but *which pieces are actually helping?* Which ones are dead weight? Which ones are secretly fighting each other?
+
+The standard approach — ablate one piece at a time — misses interactions and costs 64 runs for 6 components. We do it in 8.
+
+**prompt-doe** brings [Design of Experiments](https://en.wikipedia.org/wiki/Design_of_experiments) to prompt engineering. It tells you:
+
+1. **Which components help, which hurt, which do nothing** — with confidence intervals
+2. **Whether your components interact** (entanglement) — or if they're safe to tune independently
+3. **All of this at 12.5% of the brute-force cost** — 8 runs instead of 64
+
+This is the code and data for the paper *"When Does Component Independence Hold? Entanglement Diagnostics and Fractional Factorial Attribution for LLM Prompts"*.
+
+---
+
+## What We Found
+
+### The headline numbers
+
+| Finding | Number |
+|---------|--------|
+| PB screening cost vs. full factorial | **8 runs vs. 64** (12.5%) |
+| Cross-model effect direction agreement | **94.4%** (17/18 component-task pairs) |
+| Entanglement range across models | **0/15 to 13/15** significant pairs |
+| Length-artifact correlation | **r = −0.87** (entanglement is *not* a length effect) |
+
+### Entanglement is model-specific — not family-specific
+
+<p align="center">
+  <img src="figures/component_entanglement_by_model.svg" alt="Entanglement varies by model, not model family" width="700">
+</p>
+
+GPT-4o-mini and GPT-4o are both OpenAI models. One has 13/15 entangled component pairs; the other has 0/15. Same family, opposite behavior. This means entanglement is a property of how a model was trained (likely distillation), not its architecture.
+
+### Three things every prompt engineer should know
+
+> **Always include output format instructions.** Most reliably beneficial component across all 5 models and all 3 tasks. No exceptions.
+
+> **Drop the persona.** "Act as a meticulous professor" hurts accuracy in every single model-task combination we tested (15/15 negative).
+
+> **Few-shot examples work.** Positive effect everywhere. Not surprising, but now quantified with confidence intervals.
 
 ---
 
 ## Quick Start
 
+Three commands to run the full protocol on your own model:
+
 ```bash
-# 1. Install dependencies
 pip install -r requirements.txt
+export OPENAI_API_KEY="your-key"
 
-# 2. Set your API key(s)
-export OPENAI_API_KEY="your-key-here"
-export OPENROUTER_API_KEY="your-key-here"  # optional, for Claude/DeepSeek/Gemma
-
-# 3. Run the full protocol on a model
-PYTHONPATH=. python scripts/run_entanglement.py        # Phase 1: HSIC entanglement test
-PYTHONPATH=. python scripts/run_pb_screen.py            # Phase 2: PB + LOO screening
-PYTHONPATH=. python scripts/run_analysis.py             # Phase 3: Bootstrap analysis
-PYTHONPATH=. python scripts/run_full_factorial.py       # Phase 4: Full factorial validation (optional, 64 runs)
+# Run everything — entanglement test, PB screen, LOO baseline, analysis
+PYTHONPATH=. python scripts/run_cross_model.py gpt4o_mini
 ```
 
-To run on a different model, add its config to `config/models.yaml` and pass the model key to the scripts.
+That's it. Results land in `results/<model-name>/` — CSVs, summary JSON, entanglement matrix.
+
+Want to run the phases individually?
+
+```bash
+PYTHONPATH=. python scripts/run_entanglement.py          # HSIC entanglement test
+PYTHONPATH=. python scripts/run_pb_screen.py              # Plackett-Burman + LOO screening
+PYTHONPATH=. python scripts/run_analysis.py               # Bootstrap CIs + BH correction
+PYTHONPATH=. python scripts/run_full_factorial.py         # Full 64-run validation (optional)
+```
 
 ---
 
-## Method Overview
+## How It Works
 
-```
-                    ┌─────────────────────────────┐
-                    │   6 Prompt Components        │
-                    │   (System Role, Persona,     │
-                    │    Few-Shot, CoT, Format,    │
-                    │    Constraints)               │
-                    └──────────┬──────────────────┘
-                               │
-              ┌────────────────┼────────────────┐
-              ▼                ▼                ▼
-   ┌──────────────┐  ┌─────────────────┐  ┌───────────────┐
-   │  Entanglement │  │  PB Screening   │  │  LOO Baseline │
-   │  (HSIC test)  │  │  (8 runs)       │  │  (7 runs)     │
-   └──────┬───────┘  └────────┬────────┘  └──────┬────────┘
-          │                   │                   │
-          ▼                   ▼                   ▼
-   Do components        Main effects       Ablation effects
-   interact in the      from fractional    from single-
-   output space?        factorial design    component removal
-          │                   │                   │
-          └───────────┬───────┘                   │
-                      ▼                           │
-              ┌───────────────┐                   │
-              │  Bootstrap +  │◄──────────────────┘
-              │  BH Correction│    Compare PB vs LOO
-              └───────┬───────┘
-                      ▼
-              Component Attribution
-              (with confidence intervals)
-```
+<p align="center">
+  <img src="figures/prompt_engineering_pipeline.svg" alt="Method pipeline" width="800">
+</p>
 
-**Step 1 — Entanglement Test.** For each pair of prompt components, we generate LLM outputs with one component toggled on/off, embed the outputs with `all-mpnet-base-v2`, and run a permutation-based HSIC independence test. If the test rejects (p < 0.05, BH-corrected), the components are *entangled* — their joint effect on outputs is non-additive.
+Every prompt is a combination of 6 binary components — each either *present* (active variant) or *absent* (neutral placeholder):
 
-**Step 2 — Plackett-Burman Screening.** An 8-run PB design (Resolution III) estimates all 6 main effects using only 12.5% of the 64 full factorial runs. Each run evaluates 200 task examples.
+| Component | When present | When absent |
+|-----------|-------------|-------------|
+| **System Role** | *"You are an expert AI assistant..."* | Neutral task framing |
+| **Persona** | *"Approach as a meticulous professor..."* | Generic instruction |
+| **Few-Shot** | 3 worked examples | No examples |
+| **CoT Trigger** | *"Think step-by-step..."* | *"Provide your answer"* |
+| **Output Format** | Structured `ANSWER:` format | *"Give your answer at the end"* |
+| **Constraints** | Explicit behavioral rules | *"Answer the question below"* |
 
-**Step 3 — LOO Baseline.** A 7-run leave-one-out design measures each component's marginal contribution from a single full-prompt baseline.
+The protocol has four stages:
 
-**Step 4 — Analysis.** Bootstrap BCa confidence intervals + Benjamini-Hochberg FDR correction quantify significance. PB and LOO rankings are compared via Spearman correlation.
+**1. Entanglement Test** — For each pair of components, toggle one on/off, collect LLM outputs, embed them with `all-mpnet-base-v2`, and run an HSIC permutation test. If it rejects: the components *interact* in the output space — you can't tune them independently.
 
----
+**2. Plackett-Burman Screening** — An 8-run [fractional factorial design](https://en.wikipedia.org/wiki/Plackett%E2%80%93Burman_design) that estimates all 6 main effects simultaneously. Each run evaluates 200 task examples. Total cost: 1,600 API calls instead of 12,800 for full factorial.
 
-## Components Studied
+**3. LOO Baseline** — A 7-run leave-one-out ablation for comparison. Remove one component at a time from the full prompt. Standard practice — we include it to show PB recovers the same rankings cheaper.
 
-| # | Component | Present | Absent |
-|---|-----------|---------|--------|
-| 1 | **System Role** | "You are an expert AI assistant..." | Neutral task framing |
-| 2 | **Persona** | "Approach as a meticulous professor..." | Generic instruction |
-| 3 | **Few-Shot** | 3 worked examples | No examples |
-| 4 | **CoT Trigger** | "Think step-by-step..." | "Provide your answer" |
-| 5 | **Output Format** | Structured ANSWER format | "Give your answer at the end" |
-| 6 | **Constraints** | Explicit behavioral constraints | "Answer the question below" |
+**4. Statistical Analysis** — Bootstrap BCa confidence intervals + Benjamini-Hochberg FDR correction. Compare PB vs. LOO rankings via Spearman correlation.
 
-## Tasks
+### Tasks and models
 
-| Task | Dataset | Type | N |
-|------|---------|------|---|
+Evaluated on 3 benchmarks spanning math, reasoning, and knowledge:
+
+| Task | Source | Type | Examples |
+|------|--------|------|----------|
 | GSM8K | `openai/gsm8k` | Numeric | 200 |
-| BBH-Date | `lukaemon/bbh` (date_understanding) | Multiple choice | 200 |
+| BBH-Date | `lukaemon/bbh` | Multiple choice | 200 |
 | MMLU-Pro | `TIGER-Lab/MMLU-Pro` | Multiple choice | 200 |
 
-## Models Tested
+Tested on 5 models across 4 providers:
 
-| Model | Provider | Entanglement (sig/15) |
-|-------|----------|----------------------|
+| Model | Provider | Entanglement |
+|-------|----------|:------------:|
 | GPT-4o-mini | OpenAI | 13/15 |
 | GPT-4o | OpenAI | 0/15 |
 | Claude Haiku 4.5 | Anthropic | 0/15 |
@@ -107,30 +145,55 @@ To run on a different model, add its config to `config/models.yaml` and pass the
 
 ---
 
-## Reproducing the Paper
+## Run It on Your Model
 
-All results in the paper can be regenerated from scratch. Pre-computed results are included in `results/`.
+Add 6 lines to `config/models.yaml`:
+
+```yaml
+your_model:
+  name: "Your Model"
+  provider: "openai"        # or "openrouter" or "ollama"
+  model_id: "your-model-id"
+  temperature: 0.0
+  max_tokens: 512
+```
+
+Then:
 
 ```bash
-# Entanglement matrices (Table 2)
+PYTHONPATH=. python scripts/run_cross_model.py your_model
+```
+
+This runs the full protocol — entanglement, PB, LOO, analysis — and saves everything to `results/<model-dir>/`.
+
+**Supported providers:** OpenAI API, OpenRouter (Claude, DeepSeek, Gemma, etc.), and local Ollama models.
+
+---
+
+## Reproducing the Paper
+
+Every table and figure in the paper can be regenerated from scratch. Pre-computed results are included in `results/`.
+
+```bash
+# Table 2 — Entanglement matrices
 PYTHONPATH=. python scripts/run_entanglement.py
 
-# PB + LOO screening for GPT-4o-mini (Tables 3-4)
+# Tables 3-4 — PB + LOO screening (GPT-4o-mini)
 PYTHONPATH=. python scripts/run_pb_screen.py
 PYTHONPATH=. python scripts/run_analysis.py
 
-# Full factorial validation on GSM8K (Table 5)
+# Table 5 — Full factorial validation (GSM8K)
 PYTHONPATH=. python scripts/run_full_factorial.py
 
-# Cross-model replication (Table 6)
+# Table 6 — Cross-model replication
 PYTHONPATH=. python scripts/run_cross_model.py claude_haiku
 PYTHONPATH=. python scripts/run_cross_model.py gpt4o
 PYTHONPATH=. python scripts/run_cross_model_analysis.py
 
-# Outlier configuration investigation (Section 4.3)
+# Section 4.3 — Outlier configuration investigation
 PYTHONPATH=. python scripts/run_outlier_investigation.py
 
-# Response-length control analysis (Appendix B)
+# Appendix B — Response-length control analysis
 PYTHONPATH=. python scripts/run_response_length_analysis.py
 ```
 
@@ -140,92 +203,34 @@ PYTHONPATH=. python scripts/run_response_length_analysis.py
 
 ```
 prompt-doe/
-├── README.md
-├── LICENSE                          # MIT
-├── requirements.txt                 # Pinned dependencies
-├── paper/
-│   └── (paper PDF)
 ├── src/
-│   ├── inference.py                 # LLM API wrappers (OpenAI, OpenRouter, Ollama)
-│   ├── datasets.py                  # Task data loading and answer parsing
-│   ├── prompts.py                   # Prompt assembly from component flags
-│   ├── components.py                # Component definitions and config loading
-│   ├── independence.py              # HSIC entanglement testing
-│   ├── design.py                    # PB, LOO, and full factorial design matrices
-│   ├── analysis.py                  # Bootstrap CIs, BH correction, PB vs LOO
-│   ├── validation.py                # Full factorial validation
-│   └── transfer.py                  # Cross-model transfer analysis
+│   ├── inference.py          # LLM API wrappers (OpenAI, OpenRouter, Ollama)
+│   ├── datasets.py           # Task loading, answer parsing
+│   ├── prompts.py            # Prompt assembly from component flags
+│   ├── components.py         # Component definitions + config loading
+│   ├── independence.py       # HSIC entanglement testing
+│   ├── design.py             # Plackett-Burman, LOO, full factorial matrices
+│   ├── analysis.py           # Bootstrap CIs, BH correction, PB vs LOO
+│   ├── validation.py         # Full factorial ground-truth comparison
+│   └── transfer.py           # Cross-model transfer analysis
 ├── scripts/
-│   ├── run_entanglement.py          # Run HSIC entanglement tests
-│   ├── run_pb_screen.py             # Run PB + LOO screening
-│   ├── run_analysis.py              # Run bootstrap analysis
-│   ├── run_full_factorial.py        # Run 64-run full factorial
-│   ├── run_cross_model.py           # Run full protocol on any model
-│   ├── run_cross_model_analysis.py  # Cross-model comparison
-│   ├── run_outlier_investigation.py # Investigate anomalous configurations
+│   ├── run_entanglement.py
+│   ├── run_pb_screen.py
+│   ├── run_analysis.py
+│   ├── run_full_factorial.py
+│   ├── run_cross_model.py
+│   ├── run_cross_model_analysis.py
+│   ├── run_outlier_investigation.py
 │   └── run_response_length_analysis.py
 ├── config/
-│   ├── models.yaml                  # Model configurations
-│   ├── tasks.yaml                   # Task definitions + few-shot examples
-│   └── components.yaml              # Component present/absent variants
-├── results/
-│   ├── gpt-4o-mini/                 # Per-model CSVs and summary
-│   ├── gpt-4o/
-│   ├── anthropic-claude-haiku-4-5/
-│   ├── deepseek-deepseek-v4-pro/
-│   ├── google-gemma-4-31b-it_free/
-│   ├── cross_model_analysis.csv
-│   ├── cross_model_summary.md
-│   └── response_length_analysis.csv
-├── figures/
-│   ├── entanglement_vs_length_cv.pdf
-│   └── component_length_shifts.pdf
-└── tests/
-    └── test_prompts.py              # Unit tests for prompts and design
+│   ├── models.yaml           # Model configurations
+│   ├── tasks.yaml            # Task definitions + few-shot examples
+│   └── components.yaml       # Component present/absent variants
+├── results/                  # Pre-computed results for all 5 models
+├── figures/                  # Publication figures (PDF + PNG + SVG)
+├── paper/                    # Paper PDF
+└── tests/                    # Unit tests
 ```
-
----
-
-## Key Results
-
-### Component Effects (5-model consensus)
-
-- **Output format specification** is the single most reliably beneficial component across all models and tasks.
-- **Persona instructions consistently degrade performance** and should be omitted unless needed for style.
-- **Few-shot examples reliably help** across all models and tasks.
-- **CoT trigger** shows mixed effects — helpful for math, neutral or slightly harmful for knowledge tasks.
-
-### Entanglement is Model-Specific
-
-Entanglement (non-additive component interactions in outputs) varies dramatically by model, not by model family. GPT-4o-mini (13/15) and GPT-4o (0/15) are both OpenAI models but behave completely differently. This suggests entanglement reflects differences in instruction-tuning or distillation, not architecture.
-
-### PB Screening Efficiency
-
-The 8-run PB design achieves 94.4% direction agreement with LOO ablation across 5 models and 3 tasks, while requiring only 8 runs vs. 64 for full factorial. For practitioners, this means you can reliably identify which prompt components help or hurt with ~1,600 API calls instead of ~12,800.
-
----
-
-## Adding Your Own Model
-
-1. Add a config entry to `config/models.yaml`:
-
-```yaml
-your_model:
-  name: "Your Model Name"
-  provider: "openai"          # or "openrouter" or "ollama"
-  model_id: "your-model-id"
-  temperature: 0.0
-  max_tokens: 512
-  requests_per_minute: null
-```
-
-2. Run the full protocol:
-
-```bash
-PYTHONPATH=. python scripts/run_cross_model.py your_model
-```
-
-This runs entanglement testing, PB screening, LOO ablation, and analysis, saving results to `results/<model-dir>/`.
 
 ---
 
@@ -241,14 +246,12 @@ This runs entanglement testing, PB screening, LOO ablation, and analysis, saving
 }
 ```
 
-*(Update with arXiv ID once posted.)*
+*(Will be updated with arXiv ID once posted.)*
 
 ---
 
-## License
-
-MIT. See [LICENSE](LICENSE).
-
-## Contact
-
-Open an issue on this repo or reach out via [GitHub](https://github.com/thisisvk45).
+<p align="center">
+  <b>License:</b> MIT &nbsp;&bull;&nbsp;
+  <b>Issues:</b> <a href="https://github.com/thisisvk45/prompt-doe/issues">GitHub Issues</a> &nbsp;&bull;&nbsp;
+  <b>Contact:</b> <a href="https://github.com/thisisvk45">@thisisvk45</a>
+</p>
