@@ -1,3 +1,4 @@
+# MIT License - Copyright (c) 2026 Vikas Kumar
 """Prompt assembly from component configurations."""
 from __future__ import annotations
 

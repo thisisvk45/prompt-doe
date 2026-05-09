@@ -1,3 +1,4 @@
+# MIT License - Copyright (c) 2026 Vikas Kumar
 from __future__ import annotations
 """Phase 5: Full 2^6 factorial validation against Plackett-Burman estimates."""
 

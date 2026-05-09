@@ -1,3 +1,4 @@
+# MIT License - Copyright (c) 2026 Vikas Kumar
 from __future__ import annotations
 """Unified inference layer for Ollama (Llama) and Anthropic (Claude) models."""
 

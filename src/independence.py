@@ -1,3 +1,4 @@
+# MIT License - Copyright (c) 2026 Vikas Kumar
 """Phase 2: Semantic independence / entanglement test between prompt components."""
 
 import itertools

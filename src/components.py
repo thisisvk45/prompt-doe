@@ -1,3 +1,4 @@
+# MIT License - Copyright (c) 2026 Vikas Kumar
 from __future__ import annotations
 """Prompt component definitions and management."""
 

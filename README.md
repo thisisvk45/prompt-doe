@@ -19,6 +19,7 @@
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/paper-arXiv_pending-b31b1b" alt="arXiv">
   <img src="https://img.shields.io/badge/models-5_tested-blue" alt="models">
   <img src="https://img.shields.io/badge/tasks-3_benchmarks-green" alt="tasks">
   <img src="https://img.shields.io/badge/license-MIT-orange" alt="license">
@@ -38,7 +39,7 @@ The standard approach — ablate one piece at a time — misses interactions and
 2. **Whether your components interact** (entanglement) — or if they're safe to tune independently
 3. **All of this at 12.5% of the brute-force cost** — 8 runs instead of 64
 
-This is the code and data for the paper *"When Does Component Independence Hold? Entanglement Diagnostics and Fractional Factorial Attribution for LLM Prompts"*.
+This is the code and data for the paper *"When Does Component Independence Hold? Output-Level Entanglement and Model-Conditional Validity of Prompt Attribution"*.
 
 ---
 
@@ -73,8 +74,6 @@ GPT-4o-mini and GPT-4o are both OpenAI models. One has 13/15 entangled component
 
 ## Quick Start
 
-Three commands to run the full protocol on your own model:
-
 ```bash
 pip install -r requirements.txt
 export OPENAI_API_KEY="your-key"
@@ -83,7 +82,14 @@ export OPENAI_API_KEY="your-key"
 PYTHONPATH=. python scripts/run_cross_model.py gpt4o_mini
 ```
 
-That's it. Results land in `results/<model-name>/` — CSVs, summary JSON, entanglement matrix.
+Results land in `results/<model-name>/` — CSVs, summary JSON, entanglement matrix.
+
+> **First-time setup** downloads ~500MB of models (`sentence-transformers/all-mpnet-base-v2`) and caches GSM8K/BBH/MMLU-Pro datasets from HuggingFace. Allow ~5 minutes for the first run.
+>
+> For cross-model replication beyond OpenAI models, also set:
+> ```bash
+> export OPENROUTER_API_KEY="your-key"  # for Claude, DeepSeek, Gemma via OpenRouter
+> ```
 
 Want to run the phases individually?
 
@@ -237,11 +243,11 @@ prompt-doe/
 ## Citation
 
 ```bibtex
-@article{prompt-doe-2025,
-  title   = {When Does Component Independence Hold? Entanglement Diagnostics
-             and Fractional Factorial Attribution for LLM Prompts},
-  author  = {Vikas},
-  year    = {2025},
+@article{kumar2026prompt,
+  title   = {When Does Component Independence Hold? Output-Level Entanglement
+             and Model-Conditional Validity of Prompt Attribution},
+  author  = {Kumar, Vikas},
+  year    = {2026},
   url     = {https://github.com/thisisvk45/prompt-doe}
 }
 ```

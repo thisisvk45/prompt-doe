@@ -1,3 +1,4 @@
+# MIT License - Copyright (c) 2026 Vikas Kumar
 from __future__ import annotations
 """Phase 4: Statistical analysis — bootstrap CIs, FDR correction, PB vs LOO comparison."""
 

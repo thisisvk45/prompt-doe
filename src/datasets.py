@@ -1,3 +1,4 @@
+# MIT License - Copyright (c) 2026 Vikas Kumar
 from __future__ import annotations
 """Data loaders for GSM8K, BBH-DateUnderstanding, and MMLU-Pro."""
 
