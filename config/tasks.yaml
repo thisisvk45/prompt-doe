@@ -1,0 +1,62 @@
+# Task definitions for the prompt attribution study
+
+gsm8k:
+  name: "GSM8K"
+  description: "Grade school math word problems"
+  dataset: "openai/gsm8k"
+  subset: "main"
+  split: "test"
+  n_samples: 200
+  seed: 42
+  metric: "accuracy"
+  answer_type: "numeric"
+  question_field: "question"
+  answer_field: "answer"
+  few_shot_examples:
+    - question: "Janet's ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She sells every duck egg at the farmers' market daily for $2. How much in dollars does she make every day at the farmers' market?"
+      answer: "18"
+    - question: "A robe takes 2 bolts of blue fiber and half that much white fiber. How many bolts in total does it take?"
+      answer: "3"
+    - question: "Josh decides to try flipping a house. He buys a house for $80,000 and then puts in $50,000 in repairs. This increased the value of the house by 150%. How much profit did he make?"
+      answer: "70000"
+
+bbh_date:
+  name: "BBH-DateUnderstanding"
+  description: "Date understanding reasoning from BIG-Bench Hard"
+  dataset: "lukaemon/bbh"
+  subset: "date_understanding"
+  split: "test"
+  n_samples: 200
+  seed: 42
+  metric: "accuracy"
+  answer_type: "multiple_choice"
+  question_field: "input"
+  answer_field: "target"
+  few_shot_examples:
+    - question: "Today is Christmas Eve of 1937. What is the date 10 days ago in MM/DD/YYYY?\nOptions:\n(A) 12/14/2026\n(B) 12/14/1937\n(C) 01/02/1938\n(D) 12/14/1938\n(E) 12/25/1937\n(F) 12/14/1937"
+      answer: "(B)"
+    - question: "Tomorrow is 11/12/2019. What is the date one year ago from today in MM/DD/YYYY?\nOptions:\n(A) 09/04/2018\n(B) 11/11/2018\n(C) 08/25/2018\n(D) 11/02/2018\n(E) 11/04/2018"
+      answer: "(B)"
+    - question: "Jane and John married on Jan 2, 1958. It is their 5-year anniversary today. What is the date tomorrow in MM/DD/YYYY?\nOptions:\n(A) 01/11/1963\n(B) 01/03/1963\n(C) 01/18/1961\n(D) 10/14/1960\n(E) 01/03/1982\n(F) 12/03/1960"
+      answer: "(B)"
+
+mmlu_pro:
+  name: "MMLU-Pro"
+  description: "Massive Multitask Language Understanding (Professional)"
+  dataset: "TIGER-Lab/MMLU-Pro"
+  subset: null
+  split: "test"
+  n_samples: 200
+  seed: 42
+  metric: "accuracy"
+  answer_type: "multiple_choice"
+  question_field: "question"
+  answer_field: "answer"
+  options_field: "options"
+  few_shot_examples:
+    - question: "Which of the following is the longest river in the world?\n(A) Amazon\n(B) Nile\n(C) Yangtze\n(D) Mississippi"
+      answer: "(B)"
+    - question: "What is the primary function of mitochondria in a cell?\n(A) Protein synthesis\n(B) Energy production\n(C) Cell division\n(D) Waste removal"
+      answer: "(B)"
+    - question: "In economics, what does GDP stand for?\n(A) General Domestic Price\n(B) Gross Domestic Product\n(C) Global Development Plan\n(D) Government Debt Program"
+      answer: "(B)"

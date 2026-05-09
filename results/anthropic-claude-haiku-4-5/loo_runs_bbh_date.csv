@@ -1,0 +1,8 @@
+run,removed_component,accuracy
+1,none (full),0.915
+2,system_role,0.895
+3,persona,0.935
+4,few_shot,0.860
+5,cot_trigger,0.905
+6,output_format,0.915
+7,constraints,0.905

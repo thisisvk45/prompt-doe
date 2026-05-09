@@ -1,0 +1,13 @@
+task,seed,accuracy
+gsm8k,42,0.805
+gsm8k,43,0.755
+gsm8k,44,0.805
+gsm8k,45,0.775
+bbh_date,42,0.440
+bbh_date,43,0.425
+bbh_date,44,0.445
+bbh_date,45,0.420
+mmlu_pro,42,0.450
+mmlu_pro,43,0.495
+mmlu_pro,44,0.410
+mmlu_pro,45,0.400

@@ -1,0 +1,137 @@
+[
+  {
+    "index": 0,
+    "question": "The girls are trying to raise money for a carnival. Kim raises $320 more than Alexandra, who raises $430, and Maryam raises $400 more than Sarah, who raises $300. How much money, in dollars, did they ",
+    "gold_answer": "2280",
+    "model_response": "Let's break down the problem step-by-step.\n\n1. **Identify the amounts raised by Alexandra and Kim:**\n   - Alexandra raises $430.\n   - Kim raises $320 more than Alexandra. Therefore, we calculate Kim's amount as follows:\n     \\[\n     \\text{Kim's amount} = \\text{Alexandra's amount} + 320 = 430 + 320 = 750\n     \\]\n\n2. **Identify the amounts raised by Sarah and Maryam:**\n   - Sarah raises $300.\n   - Maryam raises $400 more than Sarah. Therefore, we calculate Maryam's amount as follows:\n     \\[\n     ",
+    "parsed_answer": "2180",
+    "task": "gsm8k",
+    "failure_mode": "wrong_reasoning"
+  },
+  {
+    "index": 8,
+    "question": "Last year there were 50 students enrolled in a calligraphy class. This year, there was a 20% increase in enrollment. How many students are enrolled this year in the calligraphy class?",
+    "gold_answer": "60",
+    "model_response": "To determine the number of students enrolled this year in the calligraphy class, we start with the number of students from last year, which is 50.\n\nNext, we need to calculate the 20% increase in enrollment. To find 20% of 50, we use the following calculation:\n\n\\[\n20\\% \\text{ of } 50 = \\frac{20}{100} \\times 50 = 0.2 \\times 50 = 10\n\\]\n\nNow, we add this increase to the original number of students:\n\n\\[\n\\text{Number of students this year} = \\text{Last year's students} + \\text{Increase} = 50 + 10 = 60",
+    "parsed_answer": "\\]",
+    "task": "gsm8k",
+    "failure_mode": "wrong_reasoning"
+  },
+  {
+    "index": 12,
+    "question": "Jim spends 2 hours watching TV and then decides to go to bed and reads for half as long.  He does this 3 times a week.  How many hours does he spend on TV and reading in 4 weeks?",
+    "gold_answer": "36",
+    "model_response": "To solve the problem, we will break it down into clear steps.\n\n1. **Determine the time spent on TV and reading in one session:**\n   - Jim spends 2 hours watching TV.\n   - He then reads for half as long as he watched TV. Therefore, the reading time is:\n     \\[\n     \\text{Reading time} = \\frac{2 \\text{ hours}}{2} = 1 \\text{ hour}\n     \\]\n   - Total time spent in one session (TV + reading) is:\n     \\[\n     \\text{Total time per session} = 2 \\text{ hours} + 1 \\text{ hour} = 3 \\text{ hours}\n     \\]\n\n2",
+    "parsed_answer": "\\]",
+    "task": "gsm8k",
+    "failure_mode": "wrong_reasoning"
+  },
+  {
+    "index": 22,
+    "question": "While working at the restaurant, each of the forty customers who came into the restaurant gave Rafaela a $20 tip. Julieta received 10% less money in tips than Rafaela. How much money did Julieta and R",
+    "gold_answer": "1520",
+    "model_response": "First, we calculate the total amount of tips Rafaela received. Since each of the 40 customers gave her a $20 tip, we can calculate her total tips as follows:\n\n\\[\n\\text{Total tips for Rafaela} = 40 \\times 20 = 800 \\text{ dollars}\n\\]\n\nNext, we need to determine how much Julieta received in tips. According to the problem, Julieta received 10% less than Rafaela. To find 10% of Rafaela's tips, we calculate:\n\n\\[\n10\\% \\text{ of Rafaela's tips} = 0.10 \\times 800 = 80 \\text{ dollars}\n\\]\n\nNow, we subtract",
+    "parsed_answer": "\\]",
+    "task": "gsm8k",
+    "failure_mode": "wrong_reasoning"
+  },
+  {
+    "index": 25,
+    "question": "John decides to get a loan by mortgaging his home.  His house is worth $250,000.  He gets a loan worth 40% of that.  He uses 60% of that to pay off his debts.  How much money did he have leftover afte",
+    "gold_answer": "40000",
+    "model_response": "To solve the problem, we will follow these steps:\n\n1. **Calculate the loan amount**: John gets a loan worth 40% of the value of his house.\n   \\[\n   \\text{Loan amount} = 0.40 \\times 250,000 = 100,000\n   \\]\n\n2. **Determine how much he uses to pay off debts**: John uses 60% of the loan amount to pay off his debts.\n   \\[\n   \\text{Amount used to pay debts} = 0.60 \\times 100,000 = 60,000\n   \\]\n\n3. **Calculate the leftover amount after paying debts**: We subtract the amount used to pay off debts from t",
+    "parsed_answer": "\\]",
+    "task": "gsm8k",
+    "failure_mode": "wrong_reasoning"
+  },
+  {
+    "index": 0,
+    "question": "2015 is coming in 36 hours. What is the date 24 hours later in MM/DD/YYYY?\nOptions:\n(A) 01/09/2015\n(B) 12/30/2059\n(C) 12/30/2014\n(D) 01/01/2015\n(E) 01/04/2015\n(F) 12/31/2014",
+    "gold_answer": "(C)",
+    "model_response": "To solve the problem, we start by determining the current date and time when \"2015 is coming in 36 hours.\" \n\n1. **Identify the current date and time**: If 2015 is coming in 36 hours, we need to find out when that is. The start of 2015 is January 1, 2015, at 00:00 hours. Therefore, 36 hours before that would be:\n   - 36 hours before January 1, 2015, is December 30, 2014, at 12:00 hours (noon).\n\n2. **Calculate 24 hours later**: Now, we need to find the date 24 hours after December 30, 2014, at 12:",
+    "parsed_answer": "**12/31/2014**",
+    "task": "bbh_date",
+    "failure_mode": "format_breakdown"
+  },
+  {
+    "index": 1,
+    "question": "Yesterday was April 30, 2021. What is the date one week ago from today in MM/DD/YYYY?\nOptions:\n(A) 05/15/2021\n(B) 04/23/2021\n(C) 04/15/2021\n(D) 06/05/2021\n(E) 04/19/2021\n(F) 04/24/2021",
+    "gold_answer": "(F)",
+    "model_response": "To determine the date one week ago from today, we first need to establish what today is based on the information given. \n\nThe problem states that yesterday was April 30, 2021. Therefore, today is May 1, 2021.\n\nNext, we need to calculate one week ago from today, which is May 1, 2021. One week is equivalent to 7 days. \n\nNow, we subtract 7 days from May 1, 2021:\n\n- May 1, 2021 minus 7 days brings us to April 24, 2021.\n\nNow, we will check the options provided to find the correct date:\n\n(A) 05/15/202",
+    "parsed_answer": "**04/24/2021**",
+    "task": "bbh_date",
+    "failure_mode": "format_breakdown"
+  },
+  {
+    "index": 2,
+    "question": "On May 9th, 2017 Jane bought 40 eggs. She ate one per day. Today she ran out of eggs. What is the date 24 hours later in MM/DD/YYYY?\nOptions:\n(A) 06/19/2017\n(B) 07/17/2017\n(C) 06/20/2017\n(D) 06/18/201",
+    "gold_answer": "(A)",
+    "model_response": "To determine the date when Jane ran out of eggs, we start with the information provided:\n\n1. Jane bought 40 eggs on May 9th, 2017.\n2. She ate one egg per day.\n\nSince she had 40 eggs, it would take her 40 days to eat all of them. We need to calculate the date 40 days after May 9th, 2017.\n\nStarting from May 9th, we can break down the days in each month:\n\n- May has 31 days. From May 9th to May 31st is 22 days (31 - 9 = 22).\n- This leaves us with 40 - 22 = 18 days remaining to account for in June.\n\n",
+    "parsed_answer": "**06/20/2017**",
+    "task": "bbh_date",
+    "failure_mode": "format_breakdown"
+  },
+  {
+    "index": 3,
+    "question": "The concert was scheduled to be on 06/01/1943, but was delayed by one day to today. What is the date 10 days ago in MM/DD/YYYY?\nOptions:\n(A) 05/21/1943\n(B) 10/23/1942\n(C) 07/01/1943\n(D) 05/24/1943\n(E)",
+    "gold_answer": "(E)",
+    "model_response": "To determine the date 10 days ago from today, we first need to establish what today is. The concert was originally scheduled for 06/01/1943 and was delayed by one day, making today 06/02/1943.\n\nNow, we will subtract 10 days from 06/02/1943:\n\n1. Start from 06/02/1943.\n2. Subtracting 10 days:\n   - 06/02 minus 2 days brings us to 05/31/1943.\n   - We still need to subtract 8 more days.\n   - 05/31 minus 8 days brings us to 05/23/1943.\n\nNow, we will check the options provided to find the correct date:",
+    "parsed_answer": "**05/23/1943**",
+    "task": "bbh_date",
+    "failure_mode": "format_breakdown"
+  },
+  {
+    "index": 4,
+    "question": "Today, 8/3/1997, is a day that we will never forget. What is the date 24 hours later in MM/DD/YYYY?\nOptions:\n(A) 08/04/1997\n(B) 08/04/1978\n(C) 08/04/2043\n(D) 08/07/1997\n(E) 08/04/1935\n(F) 05/01/1997",
+    "gold_answer": "(A)",
+    "model_response": "To determine the date 24 hours after 8/3/1997, we need to add one day to the given date.\n\nStarting with the date:\n- Today is 8/3/1997.\n\nAdding 24 hours (or one day) to this date:\n- 8/3/1997 + 1 day = 8/4/1997.\n\nNow, we will check the options provided to find the correct date in MM/DD/YYYY format:\n(A) 08/04/1997\n(B) 08/04/1978\n(C) 08/04/2043\n(D) 08/07/1997\n(E) 08/04/1935\n(F) 05/01/1997\n\nThe only option that matches our calculated date of 8/4/1997 is:\n(A) 08/04/1997.\n\nThus, the final answer is:\n**",
+    "parsed_answer": "**08/04/1997**",
+    "task": "bbh_date",
+    "failure_mode": "format_breakdown"
+  },
+  {
+    "index": 1,
+    "question": "A supplier of ink for printers sent the following letter to all of its customers:\"Closeout special! We have decided to no longer stock green ink cartridges. We have on hand a limited supply of green i",
+    "gold_answer": "(D)",
+    "model_response": "To determine the maximum amount of damages that the supplier should be entitled to recover in the event of a breach of contract by the customer, we need to analyze the situation step-by-step.\n\n1. **Understanding the Contract**: The customer placed an order for 100 green ink cartridges, which the supplier acknowledged and promised to ship. This creates a binding contract for the sale of those cartridges.\n\n2. **Cancellation of the Order**: The customer later sent an email to cancel the order after",
+    "parsed_answer": "6. **Conclusion**: Since the supplier",
+    "task": "mmlu_pro",
+    "failure_mode": "wrong_reasoning"
+  },
+  {
+    "index": 2,
+    "question": "Peter bought a typewriter for $125, less a 5% discount. The state sales tax was 4.5% and the city tax vas 2.5%. How much did Peter pay?\n(A) $133.28\n(B) $129.37\n(C) $135.31\n(D) $127.06\n(E) $118.75\n(F) ",
+    "gold_answer": "(D)",
+    "model_response": "To determine how much Peter paid for the typewriter, we will follow these steps:\n\n1. **Calculate the discount on the typewriter:**\n   - The original price of the typewriter is $125.\n   - The discount is 5% of $125.\n   - Discount = 0.05 * 125 = $6.25.\n\n2. **Calculate the price after the discount:**\n   - Price after discount = Original price - Discount.\n   - Price after discount = 125 - 6.25 = $118.75.\n\n3. **Calculate the total sales tax:**\n   - The total sales tax consists of the state sales tax ",
+    "parsed_answer": "**$127.06**",
+    "task": "mmlu_pro",
+    "failure_mode": "format_breakdown"
+  },
+  {
+    "index": 3,
+    "question": "Using the tables of standard electrode potentials, arrange the fol-lowing substances in decreasing order of ability as reducing agents: Al, Co, Ni, Ag, H_2, Na .\n(A) H_2 > Ni > Co > Al > Na > Ag\n(B) A",
+    "gold_answer": "(I)",
+    "model_response": "To determine the decreasing order of ability as reducing agents for the substances Al, Co, Ni, Ag, H\u2082, and Na, we need to refer to the standard electrode potentials (E\u00b0) for each of these substances. A more negative standard electrode potential indicates a stronger reducing agent because it is more likely to lose electrons.\n\n1. **Standard Electrode Potentials**:\n   - Al: E\u00b0 = -1.66 V\n   - Co: E\u00b0 = -0.28 V\n   - Ni: E\u00b0 = -0.23 V\n   - Ag: E\u00b0 = +0.80 V\n   - H\u2082: E\u00b0 = 0.00 V (reference)\n   - Na: E\u00b0 = ",
+    "parsed_answer": "The correct order we derived (",
+    "task": "mmlu_pro",
+    "failure_mode": "format_breakdown"
+  },
+  {
+    "index": 4,
+    "question": "The gypsy moth produces a natural attractant, C_18H_34O_3. If a female moth is trapped behind a cellophane screen containing a pinhole and the carbon dioxide she produces diffuses through the pinhole ",
+    "gold_answer": "(I)",
+    "model_response": "To solve the problem, we need to determine the quantity of the attractant (C_18H_34O_3) that diffuses through the pinhole in the same time frame as the carbon dioxide (CO_2) diffusion.\n\n1. **Understanding Diffusion Rates**: The diffusion rate of a gas through a small opening can be described by Graham's law of effusion, which states that the rate of effusion of a gas is inversely proportional to the square root of its molar mass.\n\n2. **Molar Mass Calculation**:\n   - For carbon dioxide (CO_2):\n  ",
+    "parsed_answer": "\\frac{298.452",
+    "task": "mmlu_pro",
+    "failure_mode": "format_breakdown"
+  },
+  {
+    "index": 5,
+    "question": "Liquid nitrogen is an excellent bath for keeping temperatures around 77\u00b0K, its normal boiling point. What pressure would you need to maintain over the liquid nitrogen if you wanted to set the bath tem",
+    "gold_answer": "(B)",
+    "model_response": "To determine the pressure required to maintain a bath temperature of 85 K over liquid nitrogen, we can use the Clausius-Clapeyron equation, which relates the change in pressure with temperature for a phase change. The equation is given by:\n\n\\[\n\\frac{dP}{dT} = \\frac{L}{T \\Delta V}\n\\]\n\nWhere:\n- \\( L \\) is the heat of vaporization (in J/mol),\n- \\( T \\) is the temperature (in K),\n- \\( \\Delta V \\) is the change in volume (which we can assume to be approximately constant for this calculation).\n\nHoweve",
+    "parsed_answer": "\\frac",
+    "task": "mmlu_pro",
+    "failure_mode": "format_breakdown"
+  }
+]

@@ -1,0 +1,92 @@
+{
+  "n_models": 5,
+  "models": [
+    "GPT-4o-mini",
+    "GPT-4o",
+    "Claude Haiku 4.5",
+    "DeepSeek V4 Pro",
+    "Gemma 4 31B"
+  ],
+  "entanglement_counts": [
+    13,
+    0,
+    0,
+    9,
+    6
+  ],
+  "overall_cv_chars": [
+    0.5303,
+    0.5797,
+    0.571,
+    0.5027,
+    0.5359
+  ],
+  "overall_cv_tokens": [
+    0.4612,
+    0.5114,
+    0.4405,
+    0.4257,
+    0.4559
+  ],
+  "mean_response_lengths": [
+    963.4,
+    933.4,
+    836.9,
+    902.2,
+    788.9
+  ],
+  "char_length": {
+    "spearman_r": -0.8721,
+    "spearman_p": 0.0539,
+    "pearson_r": -0.8331,
+    "pearson_p": 0.0798
+  },
+  "token_count": {
+    "spearman_r": -0.1539,
+    "spearman_p": 0.8048,
+    "pearson_r": -0.3901,
+    "pearson_p": 0.5162
+  },
+  "component_length_shifts": {
+    "GPT-4o-mini": {
+      "system_role": 53.9,
+      "persona": 79.5,
+      "few_shot": 153.1,
+      "cot_trigger": 32.5,
+      "output_format": 152.6,
+      "constraints": 240.2
+    },
+    "GPT-4o": {
+      "system_role": 49.1,
+      "persona": 180.0,
+      "few_shot": 73.3,
+      "cot_trigger": 45.4,
+      "output_format": 178.9,
+      "constraints": 146.3
+    },
+    "Claude Haiku 4.5": {
+      "system_role": 86.8,
+      "persona": 66.0,
+      "few_shot": 69.4,
+      "cot_trigger": 15.2,
+      "output_format": 91.7,
+      "constraints": 97.7
+    },
+    "DeepSeek V4 Pro": {
+      "system_role": 68,
+      "persona": 80,
+      "few_shot": 64,
+      "cot_trigger": 43,
+      "output_format": 161,
+      "constraints": 130
+    },
+    "Gemma 4 31B": {
+      "system_role": 66,
+      "persona": 131,
+      "few_shot": 77,
+      "cot_trigger": 33,
+      "output_format": 113,
+      "constraints": 98
+    }
+  }
+}

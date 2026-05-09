@@ -1,0 +1,7 @@
+component,pb_effect,true_effect,error
+system_role,+0.0187,+0.0044,+0.0144
+persona,-0.0312,-0.0488,+0.0175
+few_shot,+0.0288,+0.0394,-0.0106
+cot_trigger,-0.0137,+0.0038,-0.0175
+output_format,+0.0463,+0.0734,-0.0272
+constraints,-0.0438,-0.0022,-0.0416

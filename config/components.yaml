@@ -1,0 +1,55 @@
+# 6 Prompt Components — each has a "present" and "absent" variant.
+# "absent" variants are neutral placeholders of similar token length to control for prompt length.
+
+system_role:
+  name: "System Role"
+  present: |
+    You are an expert AI assistant specializing in solving problems accurately and thoroughly.
+    Your role is to analyze the given problem carefully and provide the correct answer.
+  absent: |
+    The following is a task that requires providing an answer.
+    Please read the problem below and respond with your answer.
+
+persona:
+  name: "Persona"
+  present: |
+    Approach this as a meticulous professor who double-checks every step of their reasoning.
+    You take pride in precision and never rush to conclusions.
+  absent: |
+    Process the following input and generate the appropriate output.
+    Provide your response below.
+
+few_shot:
+  name: "Few-Shot Examples"
+  # Note: actual few-shot examples are task-specific and injected by src/components.py
+  # This config just controls the flag; examples are defined per-task in tasks.yaml
+  present: true
+  absent: false
+
+cot_trigger:
+  name: "Chain-of-Thought Trigger"
+  present: |
+    Think through this step-by-step. Show your reasoning before giving your final answer.
+  absent: |
+    Provide your answer to the following problem.
+
+output_format:
+  name: "Output Format Specification"
+  present: |
+    Format your response as follows:
+    - First, provide your reasoning (if applicable).
+    - Then, on a new line, write "ANSWER: " followed by your final answer.
+    - For multiple choice, give only the letter. For numeric answers, give only the number.
+  absent: |
+    Give your answer at the end of your response.
+
+constraints:
+  name: "Constraints"
+  present: |
+    Important constraints:
+    - Do not make assumptions beyond what is stated in the problem.
+    - If the problem is multiple choice, select exactly one option.
+    - Be concise and precise in your final answer.
+    - Do not include unnecessary commentary after your answer.
+  absent: |
+    Answer the question below.

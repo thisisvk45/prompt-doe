@@ -1,0 +1,8 @@
+run,config,system_role,persona,few_shot,cot_trigger,output_format,constraints,accuracy
+1,full,+,+,+,+,+,+,0.925
+2,without_system_role,-,+,+,+,+,+,0.940
+3,without_persona,+,-,+,+,+,+,0.930
+4,without_few_shot,+,+,-,+,+,+,0.950
+5,without_cot_trigger,+,+,+,-,+,+,0.925
+6,without_output_format,+,+,+,+,-,+,0.910
+7,without_constraints,+,+,+,+,+,-,0.940

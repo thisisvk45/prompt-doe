@@ -1,0 +1,49 @@
+# Model configurations
+
+llama_8b:
+  name: "Llama 3.1 8B Instruct"
+  provider: "ollama"
+  model_id: "llama3.1:8b-instruct-q8_0"
+  temperature: 0.0
+  max_tokens: 512
+  requests_per_minute: null  # local, no rate limit
+
+gpt4o_mini:
+  name: "GPT-4o-mini"
+  provider: "openai"
+  model_id: "gpt-4o-mini"
+  temperature: 0.0
+  max_tokens: 512
+  requests_per_minute: null  # GPT-4o-mini has high RPM, no throttle needed
+
+claude_haiku:
+  name: "Claude Haiku 4.5"
+  provider: "openrouter"
+  model_id: "anthropic/claude-haiku-4-5"
+  temperature: 0.0
+  max_tokens: 512
+  requests_per_minute: null
+
+deepseek_v4_pro:
+  name: "DeepSeek V4 Pro"
+  provider: "openrouter"
+  model_id: "deepseek/deepseek-v4-pro"
+  temperature: 0.0
+  max_tokens: 512
+  requests_per_minute: null
+
+gemma_4_31b:
+  name: "Gemma 4 31B"
+  provider: "openrouter"
+  model_id: "google/gemma-4-31b-it:free"
+  temperature: 0.0
+  max_tokens: 512
+  requests_per_minute: null
+
+gpt4o:
+  name: "GPT-4o"
+  provider: "openai"
+  model_id: "gpt-4o"
+  temperature: 0.0
+  max_tokens: 512
+  requests_per_minute: null

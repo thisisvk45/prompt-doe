@@ -1,0 +1,16 @@
+component_a,component_b,interaction_effect
+system_role,persona,+0.0147
+system_role,few_shot,-0.0034
+system_role,cot_trigger,+0.0028
+system_role,output_format,-0.0088
+system_role,constraints,+0.0006
+persona,few_shot,+0.0272
+persona,cot_trigger,+0.0147
+persona,output_format,+0.0487
+persona,constraints,+0.0088
+few_shot,cot_trigger,+0.0022
+few_shot,output_format,-0.0494
+few_shot,constraints,-0.0125
+cot_trigger,output_format,+0.0025
+cot_trigger,constraints,+0.0100
+output_format,constraints,-0.0003
