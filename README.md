@@ -286,32 +286,38 @@ prompt-doe/
 
 <details>
 <summary><b>Does this work with closed-source APIs (GPT, Claude)?</b></summary>
-Yes. We tested on GPT-4o-mini, GPT-4o (OpenAI API), and Claude Haiku 4.5 (via OpenRouter). Any model with a chat completions endpoint works.
+<br>
+Yes. The full protocol — including HSIC entanglement testing — runs entirely on model outputs. No model internals required. Anything reachable via OpenAI, OpenRouter, Anthropic, or Ollama APIs works out of the box.
 </details>
 
 <details>
 <summary><b>How long does it take?</b></summary>
-~20 minutes on GPT-4o-mini, ~40 minutes on Claude Haiku for the full protocol (entanglement + PB + LOO + analysis across 3 tasks). Mostly API latency.
+<br>
+Per model: roughly 20 minutes on GPT-4o-mini, 40 minutes on Claude Haiku 4.5, 30–45 minutes on most OpenRouter models. The full 5-model replication from the paper takes about 4 hours of mostly-idle wall time (rate limits dominate, not compute).
 </details>
 
 <details>
 <summary><b>What does it cost?</b></summary>
-$5–15 in API credits depending on the model. GPT-4o-mini is cheapest (~$5). GPT-4o is most expensive (~$15). The protocol uses ~10,500 API calls per model.
+<br>
+Per model: $5–15 in API credits depending on model pricing. The paper's full 5-model replication cost roughly $40 total. Free open-weight tiers on OpenRouter (Gemma, some DeepSeek) reduce this further.
 </details>
 
 <details>
 <summary><b>Why output-based entanglement instead of prompt-based?</b></summary>
-Because the assumption that matters for attribution is whether the model's <em>responses</em> depend on component combinations, not whether the prompt embeddings do. A model might completely ignore persona text (no output effect) even though persona changes the prompt embedding. Output-based HSIC captures the model's actual sensitivity.
+<br>
+The assumption that matters for additive attribution is independence in the model's response distribution, not in the prompt embedding. Two components can be text-level independent but still produce entangled behavioral effects on a given model. We measure what affects the conclusion: outputs.
 </details>
 
 <details>
 <summary><b>Why Plackett-Burman over Shapley values?</b></summary>
-PB recovers main effects at 12.5% the cost of full factorial. Shapley values are needed only when interaction effects dominate — which we show they don't on these benchmarks (interaction magnitudes are ~5x smaller than main effects). If you find high entanglement on your model, run the full factorial to check.
+<br>
+Plackett-Burman estimates main effects in 8 runs vs. Shapley's 64 — a 12.5% cost ratio. Shapley is the right tool when interaction effects are the question. Plackett-Burman is the right tool when "which components matter" is the question. Use Shapley as a follow-up on components flagged significant by PB screening.
 </details>
 
 <details>
 <summary><b>Can I trust these results on my model without running it?</b></summary>
-No. The whole point of the paper is that entanglement is model-specific. GPT-4o-mini and GPT-4o give opposite results with the same prompts. Run the protocol on your model.
+<br>
+No, and that's the whole point. Entanglement is model-specific (GPT-4o-mini shows 13/15 entangled pairs; GPT-4o shows 0/15 — same family, opposite behavior). The protocol is cheap enough to run on your model directly. Don't extrapolate.
 </details>
 
 ---
